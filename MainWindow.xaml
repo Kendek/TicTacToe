@@ -17,7 +17,7 @@
                 <WrapPanel Height="64">
                     <Label x:Name="NewGame" Content="New game:" Width="133" FontFamily="Arial" FontSize="20"/>
                     <Button x:Name="Solo" Content="Solo" Width="56" Height="28" Click="Solo_Click" Margin="0,0,8,0"/>
-                    <Button x:Name="Duo" Content="Duo" Width="56" Height="28"/>
+                    <Button x:Name="Duo" Content="Duo" Width="56" Height="28" Click="Duo_Click"/>
                 </WrapPanel>
                 <WrapPanel Height="77">
                     <Label x:Name="player1text" Content="Player1:" Height="34" Width="71" FontFamily="Arial" FontSize="16" Margin="0,0,5,0"/>

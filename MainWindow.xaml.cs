@@ -17,6 +17,8 @@ namespace TicTacToe
     public partial class MainWindow : Window
     {
         int[,] matrix = new int[3, 3];
+        byte mode = 0;
+        byte Player2Moves = 1;
         public MainWindow()
         {
             InitializeComponent();
@@ -32,9 +34,19 @@ namespace TicTacToe
         private void Solo_Click(object sender, RoutedEventArgs e)
         {
             Player1.IsEnabled = true;
+            Player2.IsEnabled = false;
+            Player1.Clear();
             Player2.Text = "BOT";
+            mode = 1;
         }
-        
+        private void Duo_Click(object sender, RoutedEventArgs e)
+        {
+            Player1.IsEnabled = true;
+            Player2.IsEnabled = true;
+            ClearText();
+            mode = 2;
+        }
+
         public void ShowField()
         {
             ClearField();
@@ -57,7 +69,15 @@ namespace TicTacToe
                     b.Background = new SolidColorBrush(Colors.White);
                     b.Content = GetContent(matrix[i, j], b);
                     b.FontSize = 60;
-                    b.Click += Player1_Click;
+                    if (mode == 1)
+                    {
+                        b.Click += Player1_Click;
+                    }
+                    else if (mode == 2)
+                    {
+                        if (Player2Moves == 1) { b.Click += Player1_Click; }
+                        else if (Player2Moves == 2) {  b.Click += Player2_Click; }
+                    }
 
                     Grid.SetRow(b, i);
                     Grid.SetColumn(b, j);
@@ -77,6 +97,11 @@ namespace TicTacToe
             GameField.Children.Clear();
             GameField.RowDefinitions.Clear();
             GameField.ColumnDefinitions.Clear();
+        }
+        public void ClearText()
+        {
+            Player1.Clear();
+            Player2.Clear();
         }
 
         public string GetContent(int num, Button b)
@@ -98,11 +123,35 @@ namespace TicTacToe
             int column = Grid.GetColumn(b);
 
             matrix[row, column] = 1;
-            
+
+            Player2Moves = 2;
             ShowField();
-            if (CheckWin(1) == false && CheckZeros() == 0) { MessageBox.Show("Tie"); ClearField(); }
-            else if (CheckWin(1)) { MessageBox.Show($"The winner is {Player1.Text}"); ClearField(); }
-            else { await Task.Delay(1000); BotPlayer(); }
+            if (mode == 1)
+            {
+                if (CheckWin(1) == false && CheckZeros() == 0) { MessageBox.Show("Tie"); ClearField(); ClearText(); }
+                else if (CheckWin(1)) { MessageBox.Show($"The winner is {Player1.Text}"); ClearField(); ClearText(); }
+                else { await Task.Delay(1000); BotPlayer(); }
+            }
+            else if (mode == 2)
+            {
+                if (CheckWin(1) == false && CheckZeros() == 0) { MessageBox.Show("Tie"); ClearField(); ClearText(); }
+                else if (CheckWin(1)) { MessageBox.Show($"The winner is {Player1.Text}"); ClearField(); ClearText(); }
+            }
+            
+        }
+        public async void Player2_Click(object sender, RoutedEventArgs e)
+        {
+            Button? b = sender as Button;
+            int row = Grid.GetRow(b);
+            int column = Grid.GetColumn(b);
+
+            matrix[row, column] = 3;
+
+            Player2Moves = 1;
+            ShowField();
+            if (CheckWin(3) == false && CheckZeros() == 0) { MessageBox.Show("Tie"); ClearField(); ClearText(); }
+            else if (CheckWin(3)) { MessageBox.Show($"The winner is {Player2.Text}"); ClearField(); ClearText(); };
+            await Task.Delay(1);
         }
 
         public void BotPlayer()
