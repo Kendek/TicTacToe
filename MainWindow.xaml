@@ -1,0 +1,35 @@
+﻿<Window x:Class="TicTacToe.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TicTacToe"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <StackPanel>
+                <Label x:Name="Title" Content="Tic Tac Toe" HorizontalAlignment="Center" Margin="0,22,0,0" VerticalAlignment="Top" Width="247" FontSize="36" FontFamily="Arial" HorizontalContentAlignment="Center"/>
+                <WrapPanel Height="64">
+                    <Label x:Name="NewGame" Content="New game:" Width="133" FontFamily="Arial" FontSize="20"/>
+                    <Button x:Name="Solo" Content="Solo" Width="56" Height="28" Click="Solo_Click" Margin="0,0,8,0"/>
+                    <Button x:Name="Duo" Content="Duo" Width="56" Height="28"/>
+                </WrapPanel>
+                <WrapPanel Height="77">
+                    <Label x:Name="player1text" Content="Player1:" Height="34" Width="71" FontFamily="Arial" FontSize="16" Margin="0,0,5,0"/>
+                    <TextBox x:Name="Player1" TextWrapping="Wrap" Text="" Width="174" FontSize="16" FontFamily="Arial" TextAlignment="Center" HorizontalAlignment="Center" Height="20"/>
+                    <Label x:Name="player2text" Content="Player2:" Height="34" Width="71" FontFamily="Arial" FontSize="16" Margin="0,0,5,0"/>
+                    <TextBox x:Name="Player2" TextWrapping="Wrap" Text="" Width="174" FontSize="16" FontFamily="Arial" TextAlignment="Center" HorizontalAlignment="Center" Height="20"/>
+
+                </WrapPanel>
+                <Button x:Name="Start" Content="Start" Width="142" Height="45" FontSize="24" FontFamily="Arial" Click="Start_Click"/>
+            </StackPanel>
+        </Grid>
+        <Grid x:Name="GameField" Grid.Column="1"/>
+
+    </Grid>
+</Window>
